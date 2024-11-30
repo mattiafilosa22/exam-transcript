@@ -1,0 +1,50 @@
+services:
+  app:
+    build: .
+    container_name: exam_transcript_app
+    volumes:
+      - .:/var/www/html
+    networks:
+      - exam_transcript_network
+    depends_on:
+      - db
+    environment:
+      - DB_CONNECTION=mysql
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_DATABASE=laravel
+      - DB_USERNAME=laravel
+      - DB_PASSWORD=laravel
+
+  db:
+    image: mysql:8.0
+    container_name: exam_transcript_db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: laravel
+      MYSQL_USER: laravel
+      MYSQL_PASSWORD: laravel
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - exam_transcript_network
+
+  nginx:
+    image: nginx:latest
+    container_name: exam_transcript_nginx
+    ports:
+      - "8000:80"
+    volumes:
+      - .:/var/www/html
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - app
+    networks:
+      - exam_transcript_network
+
+volumes:
+  db_data:
+
+networks:
+  exam_transcript_network:
+    driver: bridge
