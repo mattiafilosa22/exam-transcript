@@ -78,7 +78,13 @@ class ExamController extends Controller
     {
         $this->authorize('assignVote', $exam);
 
-        $exam->vote = $request->vote;
+        $validated = $request->validate([
+            'vote' => 'required|integer|between:18,30',
+        ],[
+            'vote.between' => 'vote value must be between 18 30',
+        ]);
+
+        $exam->vote = $validated['vote'];
         $exam->save();
 
         return response()->json($exam);
