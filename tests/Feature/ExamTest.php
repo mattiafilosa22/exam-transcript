@@ -28,7 +28,7 @@ class ExamTest extends TestCase
         $exam = Exam::factory()->create();
 
         // call to associate exam to student by admin
-        $response = $this->actingAs($admin, 'sanctum')->postJson("/exams/{$exam->id}/users/{$student->id}");
+        $response = $this->actingAs($admin, 'sanctum')->postJson("api/exams/{$exam->id}/users/{$student->id}");
 
         // check status
         $response->assertStatus(200);
@@ -67,7 +67,7 @@ class ExamTest extends TestCase
         $user = User::factory()->create(['role_id' => $role->id]);
 
         // make request to create new exam
-        $response = $this->actingAs($user, 'sanctum')->post('/exams', [
+        $response = $this->actingAs($user, 'sanctum')->post('api/exams', [
             'title' => 'Nuovo Esame',
             'date' => '2024-12-10',
         ]);
@@ -81,7 +81,7 @@ class ExamTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $response = $this->actingAs($user, 'sanctum')->post('/exams', [
+        $response = $this->actingAs($user, 'sanctum')->post('api/exams', [
             'title' => 'Nuovo Esame',
             'date' => '2024-12-10',
         ]);
@@ -97,7 +97,7 @@ class ExamTest extends TestCase
 
         $exam = Exam::factory()->create();
 
-        $response = $this->actingAs($user, 'sanctum')->post("/exams/{$exam->id}/vote", [
+        $response = $this->actingAs($user, 'sanctum')->post("api/exams/{$exam->id}/vote", [
             'vote' => 28,
         ]);
 
@@ -112,7 +112,7 @@ class ExamTest extends TestCase
 
         $exam = Exam::factory()->create();
 
-        $response = $this->actingAs($user, 'sanctum')->post("/exams/{$exam->id}/vote", [
+        $response = $this->actingAs($user, 'sanctum')->post("api/exams/{$exam->id}/vote", [
             'vote' => 28,
         ]);
 
@@ -125,7 +125,7 @@ class ExamTest extends TestCase
         $user = User::factory()->create();
 
         // make get request to your exams
-        $response = $this->actingAs($user, 'sanctum')->get('/yours-exams');
+        $response = $this->actingAs($user, 'sanctum')->get('api/yours-exams');
 
         // check response
         $response->assertStatus(200);
@@ -150,7 +150,7 @@ class ExamTest extends TestCase
         ]);
 
         // make request without filters
-        $response = $this->getJson('/all-exams');
+        $response = $this->getJson('api/all-exams');
         $response->assertStatus(200);
         $response->assertJsonCount(3);
     }
@@ -173,7 +173,7 @@ class ExamTest extends TestCase
         ]);
 
         // make request with title filter
-        $response = $this->getJson('/all-exams?title=Fisica');
+        $response = $this->getJson('api/all-exams?title=Fisica');
 
         $response->assertStatus(200);
         $response->assertJsonFragment(['title' => 'Esame di Fisica']);
@@ -198,7 +198,7 @@ class ExamTest extends TestCase
         ]);
 
         // make request with date filter
-        $response = $this->getJson('/all-exams?date=2024-12-05');
+        $response = $this->getJson('api/all-exams?date=2024-12-05');
 
         $response->assertStatus(200);
         $response->assertJsonFragment(['title' => 'Esame di Chimica']);
@@ -224,7 +224,7 @@ class ExamTest extends TestCase
         ]);
 
         // make request sorting by date in ascendent mode
-        $response = $this->getJson('/all-exams?sort=date');
+        $response = $this->getJson('api/all-exams?sort=date');
         $response->assertStatus(200);
         $response->assertJsonFragment(['title' => 'Esame di Matematica']);
         $response->assertJsonFragment(['title' => 'Esame di Chimica']);
@@ -249,7 +249,7 @@ class ExamTest extends TestCase
         ]);
 
         // make request sorting by date in descendent mode
-        $response = $this->getJson('/all-exams?sort=-date');
+        $response = $this->getJson('api/all-exams?sort=-date');
         $response->assertStatus(200);
         $response->assertJsonFragment(['title' => 'Esame di Fisica']);
         $response->assertJsonFragment(['title' => 'Esame di Chimica']);
