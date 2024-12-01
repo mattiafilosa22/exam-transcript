@@ -9,7 +9,6 @@ class Role extends Model
 {
     use HasFactory;
 
-    // Aggiungi gli attributi che vuoi siano assegnabili in massa
     protected $fillable = ['id', 'name'];
 
     public function users()
