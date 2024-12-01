@@ -6,15 +6,21 @@ use App\Models\Exam;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use App\Http\Controllers\Controller;
+use App\Models\User;
+use Illuminate\Http\JsonResponse;
 
 class ExamController extends Controller
 {
     use AuthorizesRequests;
 
     /**
-     * Display a listing of the resource.
+     * Display a listing of the resource
+     *
+     * @param Request $request
+     *
+     * @return JsonResponse
      */
-    public function getAll(Request $request)
+    public function getAll(Request $request): JsonResponse
     {
         $exams = Exam::query();
 
@@ -34,9 +40,13 @@ class ExamController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created resource in storage
+     *
+     * @param Request $request
+     *
+     * @return JsonResponse
      */
-    public function createExam(Request $request)
+    public function createExam(Request $request): JsonResponse
     {
         $this->authorize('createExam', Exam::class);
 
@@ -45,9 +55,11 @@ class ExamController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified resource
+     *
+     * @return JsonResponse
      */
-    public function showUserExams(Exam $exam)
+    public function showUserExams(): JsonResponse
     {
         $user = auth()->user();
         $exams = $user->exams;
@@ -55,9 +67,14 @@ class ExamController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specified resource
+     *
+     * @param Request $request
+     * @param Exam $exam
+     *
+     * @return JsonResponse
      */
-    public function assignVote(Request $request, Exam $exam)
+    public function assignVote(Request $request, Exam $exam): JsonResponse
     {
         $this->authorize('assignVote', $exam);
 
@@ -65,6 +82,29 @@ class ExamController extends Controller
         $exam->save();
 
         return response()->json($exam);
+    }
+
+    /**
+     * check if user has already done the exam
+     *
+     * @param Exam $exam
+     * @param User $user
+     *
+     * @return JsonResponse
+     */
+    public function associateExamToUser(Exam $exam, User $user): JsonResponse
+    {
+        $this->authorize('associateExamToUser', Exam::class);
+
+        // check if user has already done the exam
+        if ($user->exams->contains($exam->id)) {
+            return response()->json(['message' => 'Exam already associated with the user'], 400);
+        }
+
+        // associate user to exam
+        $user->exams()->attach($exam->id);
+
+        return response()->json(['message' => 'Exam successfully associated with user'], 200);
     }
 
     /**

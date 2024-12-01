@@ -12,28 +12,42 @@ class ExamPolicy
     use HandlesAuthorization;
 
     /**
-     * Determina se l'utente può creare un esame.
+     * check if user can create an exam
      *
      * @param  \App\Models\User  $user
+     *
      * @return bool
      */
-    public function createExam(User $user)
+    public function createExam(User $user): bool
     {
-        // Solo gli utenti con il ruolo "admin" possono creare un esame
+        // only admin user
         return $user->role?->name === 'admin';
     }
 
     /**
-     * Determina se l'utente può assegnare un voto per un esame.
+     * check if user can assign vote
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Exam  $exam
+     *
      * @return bool
      */
-    public function assignVote(User $user, Exam $exam)
+    public function assignVote(User $user): bool
     {
-        // Solo gli utenti con il ruolo "supervisor" possono assegnare un voto
+        // only supervisor
         return $user->role?->name === 'supervisor';
+    }
+
+    /**
+     * check if user can associate exam to user
+     *
+     * @param \App\Models\User $user
+     *
+     * @return bool
+     */
+    public function associateExamToUser(User $user): bool
+    {
+        // only admin
+        return $user->role?->name === 'admin';
     }
 }
 
