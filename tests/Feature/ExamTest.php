@@ -125,7 +125,7 @@ class ExamTest extends TestCase
         $user = User::factory()->create();
 
         // make get request to your exams
-        $response = $this->actingAs($user, 'sanctum')->get('api/yours-exams');
+        $response = $this->actingAs($user, 'sanctum')->get('api/exams/user');
 
         // check response
         $response->assertStatus(200);
@@ -150,7 +150,7 @@ class ExamTest extends TestCase
         ]);
 
         // make request without filters
-        $response = $this->getJson('api/all-exams');
+        $response = $this->getJson('api/exams');
         $response->assertStatus(200);
         $response->assertJsonCount(3);
     }
@@ -173,7 +173,7 @@ class ExamTest extends TestCase
         ]);
 
         // make request with title filter
-        $response = $this->getJson('api/all-exams?title=Fisica');
+        $response = $this->getJson('api/exams?title=Fisica');
 
         $response->assertStatus(200);
         $response->assertJsonFragment(['title' => 'Esame di Fisica']);
@@ -198,7 +198,7 @@ class ExamTest extends TestCase
         ]);
 
         // make request with date filter
-        $response = $this->getJson('api/all-exams?date=2024-12-05');
+        $response = $this->getJson('api/exams?date=2024-12-05');
 
         $response->assertStatus(200);
         $response->assertJsonFragment(['title' => 'Esame di Chimica']);
@@ -224,7 +224,7 @@ class ExamTest extends TestCase
         ]);
 
         // make request sorting by date in ascendent mode
-        $response = $this->getJson('api/all-exams?sort=date');
+        $response = $this->getJson('api/exams?sort=date');
         $response->assertStatus(200);
         $response->assertJsonFragment(['title' => 'Esame di Matematica']);
         $response->assertJsonFragment(['title' => 'Esame di Chimica']);
@@ -249,7 +249,7 @@ class ExamTest extends TestCase
         ]);
 
         // make request sorting by date in descendent mode
-        $response = $this->getJson('api/all-exams?sort=-date');
+        $response = $this->getJson('api/exams?sort=-date');
         $response->assertStatus(200);
         $response->assertJsonFragment(['title' => 'Esame di Fisica']);
         $response->assertJsonFragment(['title' => 'Esame di Chimica']);
