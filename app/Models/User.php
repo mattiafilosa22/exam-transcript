@@ -23,6 +23,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role_id',
     ];
 
     /**
@@ -34,31 +35,6 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
-
-    /**
-     * Boot method to assign default role during user creation.
-     */
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::creating(function ($user) {
-            if ($user->role_id) {
-                return;
-            }
-
-            // search user role
-            $defaultRole = Role::where('name', 'User')->first();
-
-            // if user role not exist create it
-            if (!$defaultRole) {
-                $defaultRole = Role::create(['name' => 'User']);
-            }
-
-            // set user role to user instance
-            $user->role_id = $defaultRole->id;
-        });
-    }
 
     public function role()
     {

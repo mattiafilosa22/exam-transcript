@@ -135,6 +135,4 @@ class ViewExamTest extends TestCase
         $response->assertJsonFragment(['title' => 'Esame di Chimica']);
         $response->assertJsonFragment(['title' => 'Esame di Matematica']);
     }
-
-
 }
