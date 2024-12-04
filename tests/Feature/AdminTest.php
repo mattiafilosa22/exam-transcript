@@ -1,13 +1,13 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Role;
 
-class ExamCreationTest extends TestCase
+class AdminTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -22,7 +22,6 @@ class ExamCreationTest extends TestCase
         $response = $this->actingAs($user, 'sanctum')->post('api/exams', [
             'title' => 'Nuovo Esame',
             'date' => '2024-12-10',
-            'vote' => 23,
         ]);
 
         // check status of response
@@ -30,19 +29,13 @@ class ExamCreationTest extends TestCase
         $this->assertDatabaseHas('exams', ['title' => 'Nuovo Esame']);
     }
 
-    public function test_user_cannot_create_exam()
+    public function test_not_admin_cannot_create_exam()
     {
+        $user = User::factory()->create();
 
-        $role = Role::firstOrCreate(['id' => 1], ['name' => 'user']);
-
-        $user = User::factory()->create(['role_id' => $role->id]);
-
-        $this->actingAs($user);
-
-        $response = $this->postJson('/api/exams', [
-            'title' => 'Science Exam',
-            'date' => '2024-12-01',
-            'vote' => 28
+        $response = $this->actingAs($user, 'sanctum')->post('api/exams', [
+            'title' => 'Nuovo Esame',
+            'date' => '2024-12-10',
         ]);
 
         $response->assertStatus(403);
