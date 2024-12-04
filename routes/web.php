@@ -1,9 +1,8 @@
 <?php
 
-use App\Http\Controllers\ExamController;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
@@ -14,6 +13,7 @@ Route::post('/login', function (Request $request) {
 
     if (Auth::attempt($credentials)) {
         $user = Auth::user();
+
         return response()->json(['token' => $user->createToken('ExamApp')->plainTextToken]);
     }
 

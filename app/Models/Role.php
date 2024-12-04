@@ -13,7 +13,6 @@ class Role extends Model
 
     public const VALID_ROLES = ['admin', 'supervisor'];
 
-
     public function users()
     {
         return $this->hasMany(User::class);
@@ -24,10 +23,9 @@ class Role extends Model
         parent::boot();
 
         static::saving(function ($role) {
-            if (!in_array($role->name, self::VALID_ROLES)) {
+            if (! in_array($role->name, self::VALID_ROLES)) {
                 throw new \InvalidArgumentException("Invalid role name: {$role->name}");
             }
         });
     }
-
 }

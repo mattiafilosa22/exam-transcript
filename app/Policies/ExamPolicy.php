@@ -1,10 +1,11 @@
 <?php
 
 // app/Policies/ExamPolicy.php
+
 namespace App\Policies;
 
-use App\Models\User;
 use App\Models\Exam;
+use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class ExamPolicy
@@ -13,10 +14,6 @@ class ExamPolicy
 
     /**
      * check if user can create an exam
-     *
-     * @param  \App\Models\User  $user
-     *
-     * @return bool
      */
     public function createExam(User $user): bool
     {
@@ -26,10 +23,6 @@ class ExamPolicy
 
     /**
      * check if user can assign vote
-     *
-     * @param  \App\Models\User  $user
-     *
-     * @return bool
      */
     public function assignVote(User $user): bool
     {
@@ -39,10 +32,6 @@ class ExamPolicy
 
     /**
      * check if user can associate exam to user
-     *
-     * @param \App\Models\User $user
-     *
-     * @return bool
      */
     public function associateExamToUser(User $user): bool
     {
@@ -50,4 +39,3 @@ class ExamPolicy
         return $user->role?->name === 'admin';
     }
 }
-
