@@ -16,7 +16,7 @@ class UserTest extends TestCase
     {
         // create user
         $user = User::factory()->create([
-            'password' => Hash::make('password123')
+            'password' => Hash::make('password123'),
         ]);
 
         // try to authenticate
@@ -72,7 +72,7 @@ class UserTest extends TestCase
         $response = $this->postJson('/api/exams', [
             'title' => 'Science Exam',
             'date' => '2024-12-01',
-            'vote' => 28
+            'vote' => 28,
         ]);
 
         $response->assertStatus(403);

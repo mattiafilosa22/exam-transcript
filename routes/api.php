@@ -22,4 +22,3 @@ Route::middleware('auth:sanctum')->group(function () {
 
 Route::get('/exams', [ExamController::class, 'getAll'])
     ->name('exams.index');
-

@@ -1,6 +1,7 @@
 <?php
 
 // tests/Unit/UserExamAssociationTest.php
+
 namespace Tests\Unit;
 
 use App\Models\Exam;
@@ -35,4 +36,3 @@ class UserExamAssociationTest extends TestCase
         $user->exams()->attach($exam->id);
     }
 }
-
