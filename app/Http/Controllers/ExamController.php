@@ -112,12 +112,4 @@ class ExamController extends Controller
 
         return response()->json(['message' => 'Exam successfully associated with user'], 200);
     }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Exam $exam)
-    {
-        //
-    }
 }
