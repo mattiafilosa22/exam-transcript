@@ -16,8 +16,8 @@ This project is built with Laravel, using Docker for containerization and Nginx 
 - Nginx: Configured as a reverse proxy or web server to serve the application, handle load balancing, and improve performance.
 
 ## Requirements
-- docker
-- laravel
+- Docker
+- Laravel
 - Basic knowledge of Nginx
 
 ## How to use API
