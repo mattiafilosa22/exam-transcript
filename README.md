@@ -7,6 +7,40 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
+## Overview
+This project is built with Laravel, using Docker for containerization and Nginx as the web server. It ensures a consistent and efficient development environment, simplifying deployment and scalability.
+
+## Features
+- Laravel Framework: A powerful and elegant PHP framework for web applications.
+- Docker: Used to containerize the application, making it easy to manage dependencies and deploy the project consistently across environments.
+- Nginx: Configured as a reverse proxy or web server to serve the application, handle load balancing, and improve performance.
+
+## Requirements
+- docker
+- laravel
+- Basic knowledge of Nginx
+
+## How to use API
+In the tests folder there are both feature and unit tests:
+
+- feature tests there are the possibility to check Admin and supervisor user. Also there is the requests to see, order and filter the exams.
+- unit tests there are the possibility to check exam validation, role management and the association between user and exam.
+
+## Usage
+
+### Build the Containers
+`docker-compose build`
+
+### Stop containers
+`docker-compose down`
+
+### Run Laravel Commands: Example
+`docker exec -it exam_transcript_app php artisan make:model ExampleModel`
+
+### Logs
+`docker-compose logs -f`
+
+
 ## About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
