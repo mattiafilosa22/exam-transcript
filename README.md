@@ -35,7 +35,9 @@ In the tests folder there are both feature and unit tests:
 `docker-compose down`
 
 ### Run Laravel Commands: Example
-`docker exec -it exam_transcript_app php artisan make:model ExampleModel`
+
+`docker exec -it exam_transcript_app bash`
+`php artisan make:model ExampleModel`
 
 ### Logs
 `docker-compose logs -f`

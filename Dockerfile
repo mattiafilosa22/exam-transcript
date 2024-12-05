@@ -22,13 +22,8 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 WORKDIR /var/www/html
 COPY . /var/www/html
 COPY ./nginx/default.conf /etc/nginx/sites-available/default
-COPY ./scripts/fix-permissions.sh /usr/local/bin/fix-permissions.sh
-
-RUN chmod +x /usr/local/bin/fix-permissions.sh
 
 COPY composer.json composer.lock /var/www/html/
 RUN composer install --no-dev --optimize-autoloader
 
 EXPOSE 80
-
-CMD /usr/local/bin/fix-permissions.sh
