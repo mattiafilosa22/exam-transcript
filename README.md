@@ -16,8 +16,8 @@ This project is built with Laravel, using Docker for containerization and Nginx 
 - Nginx: Configured as a reverse proxy or web server to serve the application, handle load balancing, and improve performance.
 
 ## Requirements
-- docker
-- laravel
+- Docker
+- Laravel
 - Basic knowledge of Nginx
 
 ## How to use API
@@ -35,7 +35,9 @@ In the tests folder there are both feature and unit tests:
 `docker-compose down`
 
 ### Run Laravel Commands: Example
-`docker exec -it exam_transcript_app php artisan make:model ExampleModel`
+
+`docker exec -it exam_transcript_app bash`
+`php artisan make:model ExampleModel`
 
 ### Logs
 `docker-compose logs -f`
